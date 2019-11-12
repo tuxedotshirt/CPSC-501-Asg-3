@@ -5,9 +5,14 @@ public class Receiver {
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
-		int port = 1111;
+		int port = 3333;
 		
 		serverSocket = createConnection(port, serverSocket);
+		
+		//Keep server running
+		while(true) {
+			
+		}
 	}
 	
 	public static ServerSocket createConnection(int port, ServerSocket socket) {

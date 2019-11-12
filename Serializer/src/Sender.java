@@ -6,7 +6,7 @@ public class Sender {
 
 	public static void main(String[] args) {
 		String server = "localhost";
-		int port = Integer.parseInt("1111");
+		int port = Integer.parseInt("3333");
 
 		Socket s = createConnection(port, server);
 	}
