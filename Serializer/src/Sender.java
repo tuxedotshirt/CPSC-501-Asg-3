@@ -41,7 +41,10 @@ public class Sender {
 			createSimpleObject();
 			break;
 		//An object that contains a reference to another object
-		case 2: break;
+		case 2: 
+			//TODO: serialize(createReferenceObject());
+			createReferenceObject();
+			break;
 		//An object that contains an array of primitives
 		case 3: break;
 		//An object that contains an array of object references
@@ -54,8 +57,19 @@ public class Sender {
 		}
 	}
 	
+	
+	public static ReferenceObject createReferenceObject() {
+		
+		SimpleObject simpleObject = createSimpleObject();
+		ReferenceObject referenceObj = new ReferenceObject(simpleObject);
+		
+		return referenceObj;
+	}
+	
+	
 	@SuppressWarnings("resource")
-	public static Object createSimpleObject() {
+	public static SimpleObject createSimpleObject() {
+		
 		SimpleObject obj = null;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter parameters: int,int");

@@ -8,9 +8,4 @@ public class SimpleObject {
 		fieldOne = one;
 		fieldTwo = two;
 	}
-	
-	public SimpleObject() {
-		
-	}
-	
 }
