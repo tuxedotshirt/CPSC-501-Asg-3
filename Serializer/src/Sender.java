@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -51,8 +54,10 @@ public class Sender {
 			createSimpleArray();
 			break;
 		//An object that contains an array of object references
-			//createReferenceArray();
-		case 4: break;
+		case 4: 
+			//TODO: serialize(createReferenceArray());
+			createReferenceArray();
+			break;
 		//An object that uses an instance of one of Java's collection classes
 		case 5: break;
 		//Quit
@@ -62,8 +67,32 @@ public class Sender {
 	}
 
 	public static ReferenceArray createReferenceArray(){
-		ReferenceArray arr = null;
+		Boolean add = true;
+		char quit = 'Y';
+		ArrayList<SimpleObject> arrayList = new ArrayList<SimpleObject>();
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Create SimpleObjects and add to array.");
+		System.out.println();
+
+		while(quit == 'Y') {
+			arrayList.add(createSimpleObject());
 		
+			System.out.println();
+			System.out.print("Create another SimpleObject? (Y/N)");
+			String word = sc.next();
+	        word = word.toUpperCase();
+	        quit= word.charAt(0);
+		}
+		int size = arrayList.size();
+		SimpleObject[] simpleArray = new SimpleObject[arrayList.size()];
+		
+		int index = 0;
+		for(SimpleObject obj : arrayList){
+			simpleArray[index++] = obj;
+		}
+		
+		ReferenceArray arr = new ReferenceArray(simpleArray);
 		return arr;
 	}
 	
