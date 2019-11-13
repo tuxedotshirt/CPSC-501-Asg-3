@@ -46,8 +46,12 @@ public class Sender {
 			createReferenceObject();
 			break;
 		//An object that contains an array of primitives
-		case 3: break;
+		case 3: 
+			//TODO: serialize(createSimpleArray());
+			createSimpleArray();
+			break;
 		//An object that contains an array of object references
+			//createReferenceArray();
 		case 4: break;
 		//An object that uses an instance of one of Java's collection classes
 		case 5: break;
@@ -56,16 +60,45 @@ public class Sender {
 		default: break;
 		}
 	}
+
+	public static ReferenceArray createReferenceArray(){
+		ReferenceArray arr = null;
+		
+		return arr;
+	}
 	
 	
-	public static ReferenceObject createReferenceObject() {
+
+	public static int[] createSimpleArray() {
+		
+		String input;
+		@SuppressWarnings("resource")
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter an array of integers separated by commas: int,int,int...");
+		input = sc.nextLine();
+		String[] arrayIndices = input.split(",");
+		int[] arr = new int[arrayIndices.length];
+
+		int i = 0;
+		for(String index : arrayIndices) {
+			try {
+				arr[i] = Integer.parseInt(index);
+				i++;
+			} catch (Exception e) {
+				System.out.println("Invalid entry: " + index);
+			}
+		}
+
+		return arr;
+	}
+	
+ 	public static ReferenceObject createReferenceObject() {
 		
 		SimpleObject simpleObject = createSimpleObject();
 		ReferenceObject referenceObj = new ReferenceObject(simpleObject);
 		
 		return referenceObj;
 	}
-	
 	
 	@SuppressWarnings("resource")
 	public static SimpleObject createSimpleObject() {
