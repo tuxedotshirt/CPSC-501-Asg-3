@@ -1,21 +1,43 @@
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Sender {
 
+public class Sender {
+	public static String server = "localhost";
+	public static int port = Integer.parseInt("3333"); //1111 and 2222 don't work
+	
 	public static void main(String[] args) {
-		String server = "localhost";
-		int port = Integer.parseInt("3333"); //1111 and 2222 don't work
+
 
 		//Socket s = 
-				createConnection(port, server);
+		createConnection(port, server);
 		
 		createObject(getMenuChoice());
+		
+		//serialize(port, server);
 	}
+/*
+	private static void serialize(int port, String server, Object obj) {
+				System.out.println("Serializing object...");
+		
+				Document doc = Serializer.serialize(obj);
+		
+				File aFile = createFile(doc);
+		
+				transferFile(server, port, aFile);
+			}
 
+		}
+	*/
+	
+	
+	
 	public static Socket createConnection(int port, String server) {
 		Socket s = null;
 		try {
@@ -73,7 +95,7 @@ public class Sender {
 			SimpleObject obj = createSimpleObject();
 			list.add(obj);
 			
-			System.out.println("Add a SimpleObject to collection? (Y/N)");
+			System.out.println("Add another SimpleObject to collection? (Y/N)");
 
 			String word = sc.next();
 			word = word.toUpperCase();
@@ -83,10 +105,6 @@ public class Sender {
 		
 		return collection;
 	}
-	
-	
-	
-	
 
 	@SuppressWarnings("resource")
 	public static ReferenceArray createReferenceArray(){
@@ -117,8 +135,6 @@ public class Sender {
 		ReferenceArray arr = new ReferenceArray(simpleArray);
 		return arr;
 	}
-	
-	
 
 	public static int[] createSimpleArray() {
 		
