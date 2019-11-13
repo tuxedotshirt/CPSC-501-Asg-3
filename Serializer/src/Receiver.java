@@ -5,7 +5,8 @@ public class Receiver {
 
 	public static void main(String[] args) {
 		ServerSocket serverSocket = null;
-		int port = 3333;
+		int port = Integer.parseInt("3333"); //1111 and 2222 don't work
+
 		
 		serverSocket = createConnection(port, serverSocket);
 		
