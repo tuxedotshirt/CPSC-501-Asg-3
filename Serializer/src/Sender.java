@@ -15,7 +15,7 @@ public class Sender {
 
 		Socket s = createConnection(port, server);
 		
-		getMenuChoice();
+		createObject(getMenuChoice());
 	}
 
 	public static Socket createConnection(int port, String server) {
@@ -32,6 +32,25 @@ public class Sender {
 		return s;
 	}
 
+	public static void createObject(int objectSelection) {
+		switch(objectSelection) {
+		//Simple object with only primitives for instance variables
+		case 1: break;
+		//An object that contains a reference to another object
+		case 2: break;
+		//An object that contains an array of primitives
+		case 3: break;
+		//An object that contains an array of object references
+		case 4: break;
+		//An object that uses an instance of one of Java's collection classes
+		case 5: break;
+		//Quit
+		case 6: break;
+		default: break;
+		}
+	}
+	
+	
 	public static int getMenuChoice() {
 		Scanner in = new Scanner(System.in);
 		String s = null;// = in.nextLine();
@@ -51,15 +70,15 @@ public class Sender {
 	public static void displayMenu() {
 		System.out.println("Create object to serialize.");
 		System.out.println("Select from the following options:");
-		//Simple object with only primitives for instance variables
+		
 		System.out.println("1. Create simple object");
-		//An object that contains a reference to another object
+		
 		System.out.println("2. Create reference object");
-		//An object that contains an array of primitives
+		
 		System.out.println("3. Create array of primitives");
-		//An object that contains an array of object references
+		
 		System.out.println("4. Create array of object references");
-		//An object that uses an instance of one of Java's collection classes
+		
 		System.out.println("5. Create Java collection class");
 		System.out.println("6. Quit");
 	}
