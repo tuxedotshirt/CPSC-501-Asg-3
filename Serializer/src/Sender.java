@@ -1,14 +1,8 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-
-
-
 
 public class Sender {
 
@@ -59,15 +53,43 @@ public class Sender {
 			createReferenceArray();
 			break;
 		//An object that uses an instance of one of Java's collection classes
-		case 5: break;
+		case 5: 
+			//TODO: serialize(createCollectionClassObject());
+			createCollectionClassObject();
+			break;
 		//Quit
 		case 6: break;
 		default: break;
 		}
 	}
+	
+	@SuppressWarnings("resource")
+	public static CollectionClassObject createCollectionClassObject() {
+		ArrayList<SimpleObject> list = new ArrayList<SimpleObject>();
+		char quit = 'Y';
+		Scanner sc = new Scanner(System.in);
+		
+		while (quit == 'Y') {
+			SimpleObject obj = createSimpleObject();
+			list.add(obj);
+			
+			System.out.println("Add a SimpleObject to collection? (Y/N)");
 
+			String word = sc.next();
+			word = word.toUpperCase();
+			quit = word.charAt(0);
+		}
+		CollectionClassObject collection = new CollectionClassObject(list);
+		
+		return collection;
+	}
+	
+	
+	
+	
+
+	@SuppressWarnings("resource")
 	public static ReferenceArray createReferenceArray(){
-		Boolean add = true;
 		char quit = 'Y';
 		ArrayList<SimpleObject> arrayList = new ArrayList<SimpleObject>();
 
@@ -84,7 +106,7 @@ public class Sender {
 	        word = word.toUpperCase();
 	        quit= word.charAt(0);
 		}
-		int size = arrayList.size();
+
 		SimpleObject[] simpleArray = new SimpleObject[arrayList.size()];
 		
 		int index = 0;
