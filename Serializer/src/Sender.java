@@ -13,7 +13,8 @@ public class Sender {
 		String server = "localhost";
 		int port = Integer.parseInt("3333"); //1111 and 2222 don't work
 
-		Socket s = createConnection(port, server);
+		//Socket s = 
+				createConnection(port, server);
 		
 		createObject(getMenuChoice());
 	}
@@ -23,10 +24,10 @@ public class Sender {
 		try {
 			s = new Socket(server, port);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Unknown host exception");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Unable to connect");
 			e.printStackTrace();
 		}
 		return s;
@@ -35,7 +36,10 @@ public class Sender {
 	public static void createObject(int objectSelection) {
 		switch(objectSelection) {
 		//Simple object with only primitives for instance variables
-		case 1: break;
+		case 1: 
+			//TODO: serialize(createSimpleObject());
+			createSimpleObject();
+			break;
 		//An object that contains a reference to another object
 		case 2: break;
 		//An object that contains an array of primitives
@@ -50,10 +54,24 @@ public class Sender {
 		}
 	}
 	
+	@SuppressWarnings("resource")
+	public static Object createSimpleObject() {
+		SimpleObject obj = null;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter parameters: int,int");
+		
+		String input = sc.nextLine();
+		String[] fields = input.split(",");
+		int fieldOne = Integer.parseInt(fields[0]);
+		int fieldTwo = Integer.parseInt(fields[1]);
+		obj = new SimpleObject(fieldOne, fieldTwo);
+
+		return obj;
+	}
 	
+	@SuppressWarnings("resource")
 	public static int getMenuChoice() {
 		Scanner in = new Scanner(System.in);
-		String s = null;// = in.nextLine();
 		int selection;
 		displayMenu();
 		do {
@@ -63,7 +81,7 @@ public class Sender {
 		}
 		selection = in.nextInt();
 		}while(selection < 1 || selection > 6);
-		//System.out.println("You have selected: " + selection);
+	
 		return selection;
 	}
 	
