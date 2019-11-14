@@ -1,42 +1,59 @@
-import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 public class Sender {
 	public static String server = "localhost";
 	public static int port = Integer.parseInt("3333"); //1111 and 2222 don't work
-	
-	public static void main(String[] args) {
-
-
-		//Socket s = 
-		createConnection(port, server);
-		
+	public static Socket s;
+	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, IOException {
 		createObject(getMenuChoice());
-		
-		//serialize(port, server);
 	}
-/*
-	private static void serialize(int port, String server, Object obj) {
-				System.out.println("Serializing object...");
-		
-				Document doc = Serializer.serialize(obj);
-		
-				File aFile = createFile(doc);
-		
-				transferFile(server, port, aFile);
-			}
+	
 
+	
+	private static void serialize(Object obj) throws IllegalArgumentException, IllegalAccessException, IOException {
+		System.out.println("Serializing object");
+
+		Serializer.serialize(obj);
+
+		System.out.println("Sending object");
+		File file = Serializer.file;
+		
+		transferFile(server, port, file);
+	}
+	
+	//can't make file send over any connection, connection reset exception
+	private static void transferFile(String server, int port, File aFile) {
+		System.out.println("Transferring file");
+		try {
+			Socket s = new Socket(server,port);
+			//createConnection(port, server);
+			OutputStream output = s.getOutputStream();
+			FileInputStream fileInputStream = new FileInputStream(aFile);
+			byte[] buffer = new byte[1024*1024];
+			int bytesRead = 0;
+			while ((bytesRead = fileInputStream.read(buffer)) > 0) {
+				output.write(buffer, 0, bytesRead);
+			}
+			fileInputStream.close();
+			s.close();
+			System.out.println("Transfer Complete");
+		} catch (IOException e) {
+			System.out.println("Can't connect");
 		}
-	*/
-	
-	
+	}
 	
 	public static Socket createConnection(int port, String server) {
 		Socket s = null;
@@ -52,32 +69,32 @@ public class Sender {
 		return s;
 	}
 
-	public static void createObject(int objectSelection) {
+	public static void createObject(int objectSelection) throws IllegalArgumentException, IllegalAccessException, IOException {
 		switch(objectSelection) {
 		//Simple object with only primitives for instance variables
 		case 1: 
-			//TODO: serialize(createSimpleObject());
-			createSimpleObject();
+			serialize(createSimpleObject());
+			//createSimpleObject();
 			break;
 		//An object that contains a reference to another object
 		case 2: 
-			//TODO: serialize(createReferenceObject());
-			createReferenceObject();
+			serialize(createReferenceObject());
+			//createReferenceObject();
 			break;
 		//An object that contains an array of primitives
 		case 3: 
-			//TODO: serialize(createSimpleArray());
-			createSimpleArray();
+			serialize(createSimpleArray());
+			//createSimpleArray();
 			break;
 		//An object that contains an array of object references
 		case 4: 
-			//TODO: serialize(createReferenceArray());
-			createReferenceArray();
+			serialize(createReferenceArray());
+			//createReferenceArray();
 			break;
 		//An object that uses an instance of one of Java's collection classes
 		case 5: 
-			//TODO: serialize(createCollectionClassObject());
-			createCollectionClassObject();
+			serialize(createCollectionClassObject());
+			//createCollectionClassObject();
 			break;
 		//Quit
 		case 6: break;
@@ -96,7 +113,7 @@ public class Sender {
 			list.add(obj);
 			
 			System.out.println("Add another SimpleObject to collection? (Y/N)");
-
+			
 			String word = sc.next();
 			word = word.toUpperCase();
 			quit = word.charAt(0);
@@ -136,7 +153,7 @@ public class Sender {
 		return arr;
 	}
 
-	public static int[] createSimpleArray() {
+	public static PrimitiveArray createSimpleArray() {
 		
 		String input;
 		@SuppressWarnings("resource")
@@ -155,8 +172,9 @@ public class Sender {
 				System.out.println("Invalid entry: " + index);
 			}
 		}
+		PrimitiveArray arrClass = new PrimitiveArray(arr);
 
-		return arr;
+		return arrClass;
 	}
 	
  	public static ReferenceObject createReferenceObject() {
