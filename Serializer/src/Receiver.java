@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -22,7 +21,7 @@ public class Receiver {
 		}
 		while (true) {
 			System.out.println("Waiting for sender");
-			File aFile = new File("recdata.xml");
+			File aFile = new File("C:\\Users\\Don\\Documents\\recdata.xml");
 			
 			Socket s = null;
 			try {
@@ -41,14 +40,13 @@ public class Receiver {
 			FileNotFoundException {
 		InputStream input = s.getInputStream();
 		FileOutputStream out = new FileOutputStream(file);
-		OutputStream output = System.out;
+
 		byte[] buffer = new byte[1024*1024];
 
 		int bytesReceived = 0;
 		System.out.println("Receiving file");
 		while ((bytesReceived = input.read(buffer)) > 0) {
 			out.write(buffer, 0, bytesReceived);
-			output.write(bytesReceived);
 			break;
 		}
 	}

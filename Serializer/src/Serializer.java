@@ -13,7 +13,7 @@ import org.jdom2.output.XMLOutputter;
 
 public class Serializer {
 	static Map im = new IdentityHashMap();
-	static File file = new File("send.xml");
+	static File file = new File("C:\\Users\\Don\\Documents\\send.xml");
 	
 	public static Document serialize(Object obj) throws IllegalArgumentException, IllegalAccessException {
 		Document doc = new Document();
