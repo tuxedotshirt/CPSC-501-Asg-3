@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.jdom2.Document;
+import org.jdom2.input.SAXBuilder;
 
 
 public class Receiver {
-	public static void main(String[] args) throws IOException {
+	@SuppressWarnings("resource")
+	public static void main(String[] args) throws Exception {
 		int port = 3333;
 		ServerSocket serverSocket = null;
+		Inspector inspector = new Inspector();
 		
 		try {
 			serverSocket = new ServerSocket(port);
@@ -32,13 +36,21 @@ public class Receiver {
 				System.exit(1);
 			}
 			receiveFile(aFile, s);
+			SAXBuilder saxBuilder = new SAXBuilder();
+            Document document = (Document) saxBuilder.build(aFile);
+			Object obj = Deserializer.deserialize(document);
 			//serverSocket.close();
+			
+			System.out.println("********************************************************************");
+            inspector.inspect(obj, true);
+            System.out.println("********************************************************************");
 		}
 	}
 
 	private static void receiveFile(File file, Socket s) throws IOException,
 			FileNotFoundException {
 		InputStream input = s.getInputStream();
+		@SuppressWarnings("resource")
 		FileOutputStream out = new FileOutputStream(file);
 
 		byte[] buffer = new byte[1024*1024];

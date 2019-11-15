@@ -4,6 +4,8 @@ public class PrimitiveArray {
 	//TODO: if there is time try to make the mixed type array work again
 	public int[] fieldOne;
 	
+	public PrimitiveArray() {}
+	
 	public PrimitiveArray(int[] intArr) {
 		fieldOne = intArr;
 

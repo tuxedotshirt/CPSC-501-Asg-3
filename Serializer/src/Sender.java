@@ -1,7 +1,5 @@
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -9,21 +7,17 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.jdom2.Document;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
-
 public class Sender {
 	public static String server = "localhost";
 	public static int port = Integer.parseInt("3333"); //1111 and 2222 don't work
 	public static Socket s;
-	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, IOException {
+	public static void main(String[] args) throws IllegalArgumentException, IllegalAccessException, IOException, NoSuchFieldException, SecurityException {
 		createObject(getMenuChoice());
 	}
 	
 
 	
-	private static void serialize(Object obj) throws IllegalArgumentException, IllegalAccessException, IOException {
+	private static void serialize(Object obj) throws IllegalArgumentException, IllegalAccessException, IOException, NoSuchFieldException, SecurityException {
 		System.out.println("Serializing object");
 
 		Serializer.serialize(obj);
@@ -39,7 +33,6 @@ public class Sender {
 		System.out.println("Transferring file");
 		try {
 			Socket s = new Socket(server,port);
-			//createConnection(port, server);
 			OutputStream output = s.getOutputStream();
 			FileInputStream fileInputStream = new FileInputStream(aFile);
 			byte[] buffer = new byte[1024*1024];
@@ -69,7 +62,7 @@ public class Sender {
 		return s;
 	}
 
-	public static void createObject(int objectSelection) throws IllegalArgumentException, IllegalAccessException, IOException {
+	public static void createObject(int objectSelection) throws IllegalArgumentException, IllegalAccessException, IOException, NoSuchFieldException, SecurityException {
 		switch(objectSelection) {
 		//Simple object with only primitives for instance variables
 		case 1: 
